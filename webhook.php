@@ -139,6 +139,12 @@ echo json_encode($webhook);
 leave();
 
 function leave() {
+	// Send back a response that says "error"
+	$speech = "Error!"
+	$webhook = new stdClass();
+	$webhook->speech = $speech;
+	$webhook->displayText = $speech;
+	$webhook->source = 'apiai-chuck-norris-jokes';
 	exit();
 }
 
