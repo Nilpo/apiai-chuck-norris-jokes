@@ -44,35 +44,77 @@ $result = $_POST['result'];
 /**
  * Bail out if an action was requested that isn't supported by this webhook.
  */
-if ($result['action'] !== 'ChuckJokes')
+if ($result['action'] !== 'ChuckJokes' || $result['action'] !== 'RedditJokes')
 	leave();
 
 
-/**
- * Handle the ChuckJokes action
- */
 
-// Web service URL
-$url = 'https://api.icndb.com/jokes/random?escape=javascript';
+switch ($result['action']) {
 
-// Set up CURL
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	case 'ChuckJokes':
+		/**
+		 * Handle the ChuckJokes action
+		 */
 
-// Execute the POST request
-$data = curl_exec($ch);
+		// Web service URL
+		$url = 'https://api.icndb.com/jokes/random?escape=javascript';
 
-// Close the connection
-curl_close($ch);
+		// Set up CURL
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-// Parse the response
-$response = json_decode($data);
+		// Execute the POST request
+		$data = curl_exec($ch);
 
-$text = $response->value->joke;
-$speech = $text;
-$displayText = $text;
+		// Close the connection
+		curl_close($ch);
+
+		// Parse the response
+		$response = json_decode($data);
+
+		$text = $response->value->joke;
+		$speech = $text;
+		$displayText = $text;
+		break;
+
+	case 'RedditJokes':
+		/**
+		 * Handle the RedditJokes action
+		 */
+
+		// Try to do some basic caching.
+		session_start();
+
+		if (!isset($_SESSION['dataCache'])) {
+
+			// Load the json data set
+			$file = 'reddit_jokes.json';
+			if (!is_file($file) || !is_readable($file)) {
+				leave();
+			}
+
+			$json = file_get_contents('reddit_jokes.json');
+
+			// Store the decoded json
+			$_SESSION['dataCache'] = json_decode($json, true);
+
+		}
+
+		// Load into an array
+		$array = $_SESSION['dataCache'];
+
+		// Grab a random entry
+		$joke = $array[rand(0, count($array) - 1)];
+
+		$text = $array['title'] . "\n\n" $array['body'];
+		$speech = $text;
+		$displayText = $text;
+		break;
+
+}
+
 
 
 /**
