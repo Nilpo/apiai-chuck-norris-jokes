@@ -17,7 +17,6 @@ if (strlen($json_params) > 0 && is isValidJSON($json_params)) {
 /**
  * JSON data is POSTed directly, not as a parameter. Retrieve it and decode it.
  */
-ini_set('always_populate_raw_post_data', '-1');
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 
@@ -85,7 +84,8 @@ switch ($result['action']) {
 		if (!isset($_SESSION['dataCache'])) {
 
 			// Load the json data set
-			$file = 'reddit_jokes.json';
+			//$file = 'reddit_jokes.json';
+			$file = 'reddit_jokes_test.json';
 			if (!is_file($file) || !is_readable($file)) {
 				leave();
 			}
