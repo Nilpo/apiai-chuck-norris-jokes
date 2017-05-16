@@ -1,8 +1,4 @@
 <?php
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 /*
 function isValidJSON($str) {
 	json_decode($str);
@@ -106,7 +102,7 @@ switch ($result['action']) {
 		// Grab a random entry
 		$joke = $array[rand(0, count($array) - 1)];
 
-		$text = $array['title'] . "\n\n" $array['body'];
+		$text = $array['title'] . "\n\n" . $array['body'];
 		$speech = $text;
 		$displayText = $text;
 		break;
