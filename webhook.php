@@ -103,7 +103,7 @@ switch ($result['action']) {
 		// Grab a random entry
 		$joke = $array[rand(0, count($array) - 1)];
 
-		$text = $array['title'] . "\n\n" . $array['body'];
+		$text = $joke['title'] . "\n\n" . $joke['body'];
 		$speech = $text;
 		$displayText = $text;
 		break;
@@ -126,6 +126,9 @@ $webhook->displayText = $displayText;
 //);
 $webhook->source = 'apiai-chuck-norris-jokes';
 
+// Log output
+error_log($speech);
+
 
 /**
  * Send the response.
@@ -145,6 +148,9 @@ function leave() {
 	//		new stdClass()
 	//);
 	$webhook->source = 'apiai-chuck-norris-jokes';
+
+	// Log output
+	error_log($speech);
 
 	/**
 	 * Send the response.
