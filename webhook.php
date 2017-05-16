@@ -44,11 +44,6 @@ $result = $_POST['result'];
 /**
  * Bail out if an action was requested that isn't supported by this webhook.
  */
-if ($result['action'] !== 'ChuckJokes' && $result['action'] !== 'RedditJokes')
-	leave();
-
-
-
 switch ($result['action']) {
 
 	case 'ChuckJokes':
@@ -113,6 +108,8 @@ switch ($result['action']) {
 		$displayText = $text;
 		break;
 
+	default:
+		leave();
 }
 
 
