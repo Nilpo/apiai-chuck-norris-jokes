@@ -121,9 +121,7 @@ $webhook = new stdClass();
 $webhook->speech = $speech;
 $webhook->displayText = $displayText;
 $webhook->data = new stdClass();
-$webhook->data->contextOut = Array(
-		new stdClass()
-);
+$webhook->data->contextOut = [];
 $webhook->source = 'apiai-chuck-norris-jokes';
 
 
