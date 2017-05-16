@@ -119,8 +119,10 @@ switch ($result['action']) {
 $webhook = new stdClass();
 $webhook->speech = $speech;
 $webhook->displayText = $displayText;
-$webhook->data = new stdClass();
-$webhook->data->contextOut = [];
+//$webhook->data = new stdClass();
+//$webhook->data->contextOut = Array(
+//		new stdClass()
+//);
 $webhook->source = 'apiai-chuck-norris-jokes';
 
 
@@ -134,14 +136,14 @@ leave();
 
 function leave() {
 	// Send back a response that says "error"
-	$speech = "Error!"
+	$speech = "Error!";
 	$webhook = new stdClass();
 	$webhook->speech = $speech;
 	$webhook->displayText = $speech;
-	$webhook->data = new stdClass();
-	$webhook->data->contextOut = Array(
-			new stdClass()
-	);
+	//$webhook->data = new stdClass();
+	//$webhook->data->contextOut = Array(
+	//		new stdClass()
+	//);
 	$webhook->source = 'apiai-chuck-norris-jokes';
 
 	/**
