@@ -90,7 +90,7 @@ switch ($result['action']) {
 				leave();
 			}
 
-			$json = file_get_contents('reddit_jokes.json');
+			$json = file_get_contents($file);
 
 			// Store the decoded json
 			$_SESSION['dataCache'] = json_decode($json, true);
