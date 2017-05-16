@@ -144,6 +144,12 @@ function leave() {
 			new stdClass()
 	);
 	$webhook->source = 'apiai-chuck-norris-jokes';
+
+	/**
+	 * Send the response.
+	 */
+	header('Content-type: application/json;charset=utf-8');
+	echo json_encode($webhook);
 	exit();
 }
 
