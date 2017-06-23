@@ -221,14 +221,15 @@ function leave() {
  * Helper function to clean up strings returned by the database
  */
 function clean_string($str) {
-	// remove slashes from single quotes
+	// remove slashes from quotes
 	$str = str_replace("\'", "'", $str);
+	$str = str_replace('\"', '"', $str);
 	// correct newline characters
 	$str = str_replace('\n', "\n", $str);
 	// correct unicode characters
 	$str = preg_replace_callback('/\\\\u[a-z0-9]{4}/i', function($m) {
 		return json_decode('"' . $m[0] . '"');
-	}, $test);
+	}, $str);
 
 	return $str;
 }
