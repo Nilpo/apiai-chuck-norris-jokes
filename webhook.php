@@ -147,6 +147,7 @@ switch ($result['action']) {
 
 		if (!pg_num_rows($result)) {
 			// no row was returned.
+			log("No result from database");
 			pg_close();
 			leave();
 		}
