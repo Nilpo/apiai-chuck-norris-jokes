@@ -1,4 +1,15 @@
 <?php
+
+// Load dependencies specified in composer.json
+//require('../vendor/autoload.php');
+
+/**
+ * Load database connection information from the environment
+ */
+extract(parse_url(getenv('DATABASE_URL')), 'db');
+$db_path = ltrim($db_path, '/');
+//$db_path = substr($db_path, 1);
+
 /*
 function isValidJSON($str) {
 	json_decode($str);
@@ -73,39 +84,78 @@ switch ($result['action']) {
 		$displayText = $text;
 		break;
 
+	// case 'RedditJokes':
+	// 	/**
+	// 	 * Handle the RedditJokes action
+	// 	 */
+
+	// 	// Try to do some basic caching.
+	// 	session_start();
+
+	// 	if (!isset($_SESSION['dataCache'])) {
+
+	// 		// Load the json data set
+	// 		//$file = 'reddit_jokes.json';
+	// 		$file = 'reddit_jokes_test.json';
+	// 		if (!is_file($file) || !is_readable($file)) {
+	// 			leave();
+	// 		}
+
+	// 		$json = file_get_contents($file);
+
+	// 		// Store the decoded json
+	// 		$_SESSION['dataCache'] = json_decode($json, true);
+
+	// 	}
+
+	// 	// Load into an array
+	// 	$array = $_SESSION['dataCache'];
+
+	// 	// Grab a random entry
+	// 	$joke = $array[rand(0, count($array) - 1)];
+
+	// 	$text = $joke['title'] . "\n\n" . $joke['body'];
+	// 	$speech = $text;
+	// 	$displayText = $text;
+	// 	break;
+
 	case 'RedditJokes':
 		/**
 		 * Handle the RedditJokes action
 		 */
 
-		// Try to do some basic caching.
-		session_start();
+		// Create a DB connection string
+		$conn = "user={$db_user} password={$db_pass} host={$db_host} port={$db_port} dbname={$db_name} sslmode=require"
 
-		if (!isset($_SESSION['dataCache'])) {
+		// Establish the connection
+		$db = pg_connect($conn);
 
-			// Load the json data set
-			//$file = 'reddit_jokes.json';
-			$file = 'reddit_jokes_test.json';
-			if (!is_file($file) || !is_readable($file)) {
-				leave();
-			}
+		// // Get a row count
+		// $num_rows = pg_query($db, "SELECT COUNT(*) FROM {$db_table}");
 
-			$json = file_get_contents($file);
+		// // Generate a random row number
+		// $rand = rand(1, count($num_rows));
 
-			// Store the decoded json
-			$_SESSION['dataCache'] = json_decode($json, true);
+		// // Grab the joke from the DB
+		// $result = pg_query($db, "SELECT title, body FROM {$db_table} WHERE id='{$rand}' LIMIT 1");
 
+		// Grab a random row from the DB
+		$result = pg_query($db, "SELECT title, body FROM {$db_table} OFFSET floor(random()*(SELECT COUNT(*) FROM {$db_table})) LIMIT 1;");
+
+		if (!pg_num_rows($result)) {
+			// no row was returned.
+			pg_close();
+			leave();
 		}
 
-		// Load into an array
-		$array = $_SESSION['dataCache'];
+		while ($row = pg_fetch_row($result)) {
+			$text = $row['title'] . "\n\n" . $row['body'];
+			$speech = $text;
+			$displayText = $text;
+		}
 
-		// Grab a random entry
-		$joke = $array[rand(0, count($array) - 1)];
+		pg_close();
 
-		$text = $joke['title'] . "\n\n" . $joke['body'];
-		$speech = $text;
-		$displayText = $text;
 		break;
 
 	default:
