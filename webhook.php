@@ -156,7 +156,7 @@ switch ($result['action']) {
 			//error_log("title: " . $row[0]);
 			//error_log("body: " . $row[1]);
 			//error_log(print_r($row, TRUE));
-			$text = $row[0] . "\n\n" . $row[1];
+			$text = clean_string($row[0] . "\n\n" . $row[1]);
 			$speech = $text;
 			$displayText = $text;
 		}
@@ -215,6 +215,13 @@ function leave() {
 	header('Content-type: application/json;charset=utf-8');
 	echo json_encode($webhook);
 	exit();
+}
+
+/**
+ * Helper function to clean up strings returned by the database
+ */
+function clean_string(str) {
+	return str_replace("\'", "'", str);
 }
 
 //EOF
