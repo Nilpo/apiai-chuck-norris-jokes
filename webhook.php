@@ -152,6 +152,7 @@ switch ($result['action']) {
 		}
 
 		while ($row = pg_fetch_row($result)) {
+			log("title: " . $row['title']);
 			$text = $row['title'] . "\n\n" . $row['body'];
 			$speech = $text;
 			$displayText = $text;
