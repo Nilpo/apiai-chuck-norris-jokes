@@ -125,6 +125,8 @@ switch ($result['action']) {
 		 * Handle the RedditJokes action
 		 */
 
+		$db_name = 'reddit_jokes';
+
 		// Create a DB connection string
 		$conn = "user={$db_user} password={$db_pass} host={$db_host} dbname={$db_name} sslmode=require";
 
