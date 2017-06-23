@@ -221,7 +221,13 @@ function leave() {
  * Helper function to clean up strings returned by the database
  */
 function clean_string($str) {
-	return str_replace("\'", "'", "$str");
+	// remove slashes from single quotes
+	$str = str_replace("\'", "'", $str);
+	// correct newline characters
+	$str = str_replace('\n', "\n", $str);
+	// correct unicode characters
+	preg_replace('/\u(.?)/i', "\u{${1}}", $str);
+	return $str;
 }
 
 //EOF
