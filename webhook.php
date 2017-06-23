@@ -226,7 +226,7 @@ function clean_string($str) {
 	// correct newline characters
 	$str = str_replace('\n', "\n", $str);
 	// correct unicode characters
-	preg_replace('/\u(.?)/i', "\u{${1}}", $str);
+	preg_replace('/\\u(.?)/i', "\u{${1}}", $str);
 	return $str;
 }
 
