@@ -226,12 +226,11 @@ function clean_string($str) {
 	// correct newline characters
 	$str = str_replace('\n', "\n", $str);
 	// correct unicode characters
-	return unicodeString($str);
-}
+	$str = preg_replace_callback('/\\\\u[a-z0-9]{4}/i', function($m) {
+		return json_decode('"' . $m[0] . '"');
+	}, $test);
 
-function unicodeString($str, $encoding=null) {
-	if (is_null($encoding)) $encoding = ini_get('mbstring.internal_encoding');
-	return preg_replace_callback('/\\\\u([0-9a-fA-F]{4})/u', create_function('$match', 'return mb_convert_encoding(pack("H*", $match[1]), '.var_export($encoding, true).', "UTF-16BE");'), $str);
+	return $str;
 }
 
 //EOF
