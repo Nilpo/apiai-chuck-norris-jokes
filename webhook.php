@@ -6,7 +6,7 @@
 /**
  * Load database connection information from the environment
  */
-extract(parse_url(getenv('DATABASE_URL')), 'db');
+extract(parse_url(getenv('DATABASE_URL')), EXTR_PREFIX_ALL, 'db');
 $db_path = ltrim($db_path, '/');
 //$db_path = substr($db_path, 1);
 
