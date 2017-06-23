@@ -28,7 +28,7 @@ if (strlen($json_params) > 0 && is isValidJSON($json_params)) {
 /**
  * JSON data is POSTed directly, not as a parameter. Retrieve it and decode it.
  */
-ini_set('always_populate_raw_post_data', -1);
+ini_set('always_populate_raw_post_data', '-1');
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 
@@ -220,8 +220,8 @@ function leave() {
 /**
  * Helper function to clean up strings returned by the database
  */
-function clean_string(str) {
-	return str_replace("\'", "'", str);
+function clean_string($str) {
+	return str_replace("\'", "'", $str);
 }
 
 //EOF
