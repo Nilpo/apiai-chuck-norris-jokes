@@ -128,7 +128,7 @@ switch ($result['action']) {
 		$db_table = 'reddit_jokes';
 
 		// Create a DB connection string
-		$conn = "user={$db_user} password={$db_pass} host={$db_host} dbname={$db_name} sslmode=require";
+		$conn = "user={$db_user} password={$db_pass} host={$db_host} dbname={$db_path} sslmode=require";
 
 		// Establish the connection
 		$db = pg_connect($conn);
