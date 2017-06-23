@@ -125,7 +125,7 @@ switch ($result['action']) {
 		 */
 
 		// Create a DB connection string
-		$conn = "user={$db_user} password={$db_pass} host={$db_host} port={$db_port} dbname={$db_name} sslmode=require"
+		$conn = "user={$db_user} password={$db_pass} host={$db_host} port={$db_port} dbname={$db_name} sslmode=require";
 
 		// Establish the connection
 		$db = pg_connect($conn);
