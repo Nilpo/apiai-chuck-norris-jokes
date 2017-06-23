@@ -147,13 +147,13 @@ switch ($result['action']) {
 
 		if (!pg_num_rows($result)) {
 			// no row was returned.
-			log("No result from database");
+			error_log("No result from database");
 			pg_close();
 			leave();
 		}
 
 		while ($row = pg_fetch_row($result)) {
-			log("title: " . $row['title']);
+			error_log("title: " . $row['title']);
 			$text = $row['title'] . "\n\n" . $row['body'];
 			$speech = $text;
 			$displayText = $text;
