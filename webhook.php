@@ -221,7 +221,7 @@ function leave() {
  * Helper function to clean up strings returned by the database
  */
 function clean_string($str) {
-	return str_replace("\'", "'", $str);
+	return str_replace("\'", "'", "$str");
 }
 
 //EOF
