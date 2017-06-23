@@ -28,6 +28,7 @@ if (strlen($json_params) > 0 && is isValidJSON($json_params)) {
 /**
  * JSON data is POSTed directly, not as a parameter. Retrieve it and decode it.
  */
+ini_set('always_populate_raw_post_data', -1);
 $_POST = json_decode(file_get_contents('php://input'), true);
 
 
@@ -125,7 +126,7 @@ switch ($result['action']) {
 		 */
 
 		// Create a DB connection string
-		$conn = "user={$db_user} password={$db_pass} host={$db_host} port={$db_port} dbname={$db_name} sslmode=require";
+		$conn = "user={$db_user} password={$db_pass} host={$db_host} dbname={$db_name} sslmode=require";
 
 		// Establish the connection
 		$db = pg_connect($conn);
