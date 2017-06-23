@@ -156,7 +156,7 @@ switch ($result['action']) {
 			//error_log("title: " . $row[0]);
 			//error_log("body: " . $row[1]);
 			//error_log(print_r($row, TRUE));
-			$text = clean_string($row[0] . "\n\n" . $row[1]);
+			$text = clean_string('\u00A9 '.$row[0] . "\n\n" . $row[1]);
 			$speech = $text;
 			$displayText = $text;
 		}
