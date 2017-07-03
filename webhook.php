@@ -174,43 +174,15 @@ switch ($result['action']) {
 		/**
 		 * Handle the LeaveRoom action
 		 */
-		//error_log("***************************************************");
-		//error_log(print_r($_POST, TRUE));
-		//error_log("***************************************************");
 
-		$message = $originalRequest['data']['message']['text'];
+		//$message = trim($originalRequest['data']['message']['text']);
+		$message = trim($originalRequest['resolvedQuery']);
 		$group = $originalRequest['data']['source']['groupId'];
 
-		if (strcasecmp(trim($result['resolvedQuery']), 'Vbot @bye') <> 0) {
+		if (strcasecmp(message, 'Vbot @bye') <> 0) {
 			error_log("String comparison failed. \n" . $message);
 			exit();
 		}
-
-		// Web service URL
-		$url = "https://api.line.me/v2/bot/group/{$group}/leave";
-
-		// Authorization Header
-		//$authorization = "Authorization: Bearer " . getenv('CHANNEL_ACCESS_TOKEN');
-
-		// Set up CURL
-		// $ch = curl_init($url);
-		// curl_setopt($ch, CURLOPT_HTTPHEADER, array($authorization));
-		// curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-		// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-		// Execute the POST request
-		//$data = curl_exec($ch);
-
-		// Log the response
-		// if ($data === false) {
-		// 	error_log(curl_error($ch));
-		// } else {
-		// 	error_log("Data: " . print_r($data));
-		// }
-
-		// Close the connection
-		//curl_close($ch);
 
 		require __DIR__ . '/vendor/autoload.php';
 
