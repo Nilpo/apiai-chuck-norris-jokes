@@ -192,7 +192,7 @@ switch ($result['action']) {
 		//$response = $bot->leaveRoom($group);
 		$response = $bot->leaveGroup($group);
 
-		error_log($response->getHTTPStatus() . ' ' . $response->getRawBody());
+		//error_log($response->getHTTPStatus() . ' ' . $response->getRawBody());
 
 		exit();
 		break;
