@@ -51,6 +51,11 @@ if (!isset($_POST['result']) || empty($_POST['result']))
  */
 $result = $_POST['result'];
 
+/**
+ * Get the original request from JSON.
+ */
+$originalRequest = $_POST['originalRequest'];
+
 
 /**
  * Bail out if an action was requested that isn't supported by this webhook.
@@ -173,7 +178,8 @@ switch ($result['action']) {
 		error_log(print_r($_POST, TRUE));
 		error_log("***************************************************");
 
-		$text = "I should leave now.";
+		$text = "I should leave now." . "\n";
+		$text .= "Group: " . $originalRequest['data']['source']['groupId'];
 		$speech = $text;
 		$displayText = $text;
 		break;
