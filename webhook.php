@@ -186,26 +186,6 @@ switch ($result['action']) {
 			exit();
 		}
 
-		// Set up output buffering so we can send a message back to API.ai
-		//if (ob_get_level() == 0) ob_start();
-
-		// Send a message before leaving
-		$speech = "Thanks for having me!\n";
-		$speech .= "Add me to invite me back.\n";
-		$speech .= "https://goo.gl/LkuMas";
-		$webhook = new stdClass();
-		$webhook->speech = $speech;
-		$webhook->displayText = $speech;
-		$webhook->source = 'apiai-chuck-norris-jokes';
-
-		// Send the response.
-		header('Content-type: application/json;charset=utf-8');
-		echo json_encode($webhook);
-
-		// Flush the output buffer to send the message before the script ends
-		//ob_flush();
-		flush();
-
 		// Web service URL
 		$url = "https://api.line.me/v2/bot/group/{$group}/leave";
 
@@ -226,7 +206,8 @@ switch ($result['action']) {
 		curl_close($ch);
 
 		// Log the response
-		error_log(print_r($data));
+		error_log("Data: " . print_r($data));
+		exit();
 		break;
 
 	default:
