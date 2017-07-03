@@ -165,6 +165,19 @@ switch ($result['action']) {
 
 		break;
 
+	case 'LeaveRoom':
+		/**
+		 * Handle the LeaveRoom action
+		 */
+		error_log("***************************************************");
+		error_log(print_r($result, TRUE));
+		error_log("***************************************************");
+
+		$text = "I should leave now.";
+		$speech = $text;
+		$displayText = $text;
+		break;
+
 	default:
 		exit();
 }
