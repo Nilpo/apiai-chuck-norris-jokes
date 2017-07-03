@@ -175,8 +175,8 @@ switch ($result['action']) {
 		 * Handle the LeaveRoom action
 		 */
 
-		//$message = trim($originalRequest['data']['message']['text']);
-		$message = trim($originalRequest['resolvedQuery']);
+		$message = trim($originalRequest['data']['message']['text']);
+		//$message = trim($originalRequest['resolvedQuery']);
 		$group = $originalRequest['data']['source']['groupId'];
 
 		if (strcasecmp($message, 'Vbot @bye') <> 0) {
