@@ -170,7 +170,7 @@ switch ($result['action']) {
 		 * Handle the LeaveRoom action
 		 */
 		error_log("***************************************************");
-		error_log(print_r($result, TRUE));
+		error_log(print_r($_POST, TRUE));
 		error_log("***************************************************");
 
 		$text = "I should leave now.";
