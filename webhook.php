@@ -179,7 +179,7 @@ switch ($result['action']) {
 		$message = trim($originalRequest['resolvedQuery']);
 		$group = $originalRequest['data']['source']['groupId'];
 
-		if (strcasecmp(message, 'Vbot @bye') <> 0) {
+		if (strcasecmp($message, 'Vbot @bye') <> 0) {
 			error_log("String comparison failed. \n" . $message);
 			exit();
 		}
