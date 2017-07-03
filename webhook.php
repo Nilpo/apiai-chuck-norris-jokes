@@ -190,27 +190,36 @@ switch ($result['action']) {
 		$url = "https://api.line.me/v2/bot/group/{$group}/leave";
 
 		// Authorization Header
-		$authorization = "Authorization: Bearer " . getenv('CHANNEL_ACCESS_TOKEN');
+		//$authorization = "Authorization: Bearer " . getenv('CHANNEL_ACCESS_TOKEN');
 
 		// Set up CURL
-		$ch = curl_init($url);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array($authorization));
-		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		// $ch = curl_init($url);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, array($authorization));
+		// curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		// Execute the POST request
-		$data = curl_exec($ch);
+		//$data = curl_exec($ch);
 
 		// Log the response
-		if ($data === false) {
-			error_log(curl_error($ch));
-		} else {
-			error_log("Data: " . print_r($data));
-		}
+		// if ($data === false) {
+		// 	error_log(curl_error($ch));
+		// } else {
+		// 	error_log("Data: " . print_r($data));
+		// }
 
 		// Close the connection
-		curl_close($ch);
+		//curl_close($ch);
+
+		require __DIR__ . '/vendor/autoload.php';
+
+		$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTP-Client(getenv('CHANNEL_ACCESS_TOKEN'));
+		$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => getenv('CHANNEL_ACCESS_SECRET')]);
+
+		$response = $bot->leaveRoom($group);
+
+		error_log($response->getHTTPStatus() . ' ' . $response->getRawBody());
 
 		exit();
 		break;

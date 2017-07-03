@@ -1,6 +1,7 @@
 {
 	"require" : {
-		"php": ">=7.0.0"
+		"php": ">=7.0.0",
+		"linecorp/line-bot-sdk": "^2.1"
 	},
 	"require-dev": {
 		"heroku/heroku-buildpack-php": "*"
