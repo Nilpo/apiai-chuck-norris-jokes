@@ -214,7 +214,7 @@ switch ($result['action']) {
 
 		require __DIR__ . '/vendor/autoload.php';
 
-		$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTP-Client(getenv('CHANNEL_ACCESS_TOKEN'));
+		$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
 		$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => getenv('CHANNEL_ACCESS_SECRET')]);
 
 		$response = $bot->leaveRoom($group);
