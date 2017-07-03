@@ -178,10 +178,55 @@ switch ($result['action']) {
 		error_log(print_r($_POST, TRUE));
 		error_log("***************************************************");
 
-		$text = "I should leave now." . "\n";
-		$text .= "Group: " . $originalRequest['data']['source']['groupId'];
-		$speech = $text;
-		$displayText = $text;
+		$message = $originalRequest['data']['message']['text'];
+		$group = $originalRequest['data']['source']['groupId'];
+
+		if (strcasecmp(trim($message), 'Vbot @bye') <> 0) {
+			error_log("String comparison failed. \n" . $message);
+			exit();
+		}
+
+		// Set up output buffering so we can send a message back to API.ai
+		//if (ob_get_level() == 0) ob_start();
+
+		// Send a message before leaving
+		$speech = "Thanks for having me!\n";
+		$speech .= "Add me to invite me back.\n";
+		$speech .= "https://goo.gl/LkuMas";
+		$webhook = new stdClass();
+		$webhook->speech = $speech;
+		$webhook->displayText = $speech;
+		$webhook->source = 'apiai-chuck-norris-jokes';
+
+		// Send the response.
+		header('Content-type: application/json;charset=utf-8');
+		echo json_encode($webhook);
+
+		// Flush the output buffer to send the message before the script ends
+		//ob_flush();
+		flush();
+
+		// Web service URL
+		$url = "https://api.line.me/v2/bot/group/{$group}/leave";
+
+		// Authorization Header
+		$authorization = "Authorization: Bearer " . getenv('CHANNEL_ACCESS_TOKEN');
+
+		// Set up CURL
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array($authorization));
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// Execute the POST request
+		$data = curl_exec($ch);
+
+		// Close the connection
+		curl_close($ch);
+
+		// Log the response
+		error_log(print_r($data));
 		break;
 
 	default:
