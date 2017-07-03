@@ -174,9 +174,9 @@ switch ($result['action']) {
 		/**
 		 * Handle the LeaveRoom action
 		 */
-		error_log("***************************************************");
-		error_log(print_r($_POST, TRUE));
-		error_log("***************************************************");
+		//error_log("***************************************************");
+		//error_log(print_r($_POST, TRUE));
+		//error_log("***************************************************");
 
 		$message = $originalRequest['data']['message']['text'];
 		$group = $originalRequest['data']['source']['groupId'];
@@ -202,11 +202,16 @@ switch ($result['action']) {
 		// Execute the POST request
 		$data = curl_exec($ch);
 
+		// Log the response
+		if ($data === false) {
+			error_log(curl_error($ch));
+		} else {
+			error_log("Data: " . print_r($data));
+		}
+
 		// Close the connection
 		curl_close($ch);
 
-		// Log the response
-		error_log("Data: " . print_r($data));
 		exit();
 		break;
 
