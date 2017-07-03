@@ -217,7 +217,8 @@ switch ($result['action']) {
 		$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
 		$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => getenv('CHANNEL_ACCESS_SECRET')]);
 
-		$response = $bot->leaveRoom($group);
+		//$response = $bot->leaveRoom($group);
+		$response = $bot->leaveGroup($group);
 
 		error_log($response->getHTTPStatus() . ' ' . $response->getRawBody());
 
