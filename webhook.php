@@ -170,6 +170,38 @@ switch ($result['action']) {
 
 		break;
 
+	case 'Magic8Ball':
+		/**
+		 * Handle the Magic8Ball action
+		 */
+
+		// Web service URL
+		$url = 'https://8ball.delegator.com/magic/JSON/';
+
+		// Get the question
+		$message = trim($originalRequest['data']['message']['text']);
+		$question = preg_replace('/^8ball /i', '', $message);
+
+		// Set up CURL
+		$ch = curl_init($url . urlencode($question));
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// Execute the POST request
+		$data = curl_exec($ch);
+
+		// Close the connection
+		curl_close($ch);
+
+		// Parse the response
+		$response = json_decode($data);
+
+		$text = $response->magic->answer;
+		$speech = $text;
+		$displayText = $text;
+		break;
+
 	case 'LeaveRoom':
 		/**
 		 * Handle the LeaveRoom action
